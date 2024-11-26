@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        /* Add your custom styles here */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 2.5rem;
+            color: #007bff;
+        }
+
+        .container {
+            margin-top: 30px;
+        }
+
+        .profile-section,
+        .update-form,
+        .subject-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .profile-section h3,
+        .update-form h3,
+        .subject-section h3 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        .profile-pic {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-pic img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+        }
+
+        .update-form input,
+        .update-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        .update-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .update-form button:hover {
+            background-color: #0056b3;
+        }
+
+        .update-btn {
+            margin-top: 20px;
+        }
+
+        .update-btn button {
+            background-color: #ff9800;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .update-btn button:hover {
+            background-color: #e68900;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome, {{ student.first_name }} {{ student.last_name }}</h1>
+
+    <div class="container">
+        <div class="row">
+            <!-- Profile Section -->
+            <div class="col-md-4">
+                <div class="profile-section">
+                    <h3>Profile Information</h3>
+                    <div class="profile-pic">
+                        {% if student.profile_pic %}
+                            <img src="{{ student.profile_pic.url }}" alt="Profile Picture">
+                        {% else %}
+                            <img src="/path/to/default/pic.jpg" alt="Default Profile Picture">
+                        {% endif %}
+                    </div>
+                    <p><i class="material-icons">account_circle</i> <strong>First Name:</strong> {{ student.first_name }}</p>
+                    <p><i class="material-icons">account_circle</i> <strong>Last Name:</strong> {{ student.last_name }}</p>
+                    <p><i class="material-icons">cake</i> <strong>Date of Birth:</strong> {{ student.date_of_birth }}</p>
+                    <p><i class="material-icons">wc</i> <strong>Gender:</strong> {{ student.gender }}</p>
+                    <p><i class="material-icons">bloodtype</i> <strong>Blood Group:</strong> {{ student.blood_group }}</p>
+                    <p><i class="material-icons">phone</i> <strong>Contact Number:</strong> {{ student.contact_number }}</p>
+                    <p><i class="material-icons">location_on</i> <strong>Address:</strong> {{ student.address }}</p>
+
+                    <div class="update-btn text-center">
+                        <a href="{% url 'update_student' student.id %}">
+                            <button class="btn btn-warning">
+                                <i class="material-icons">edit</i> Update Profile
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assigned Subject Section -->
+            <div class="col-md-8">
+                <div class="subject-section">
+                    <h3>Assigned Subject</h3>
+                    {% if student.teacher %}
+                        <p><i class="material-icons">school</i> <strong>Teacher:</strong> {{ student.teacher.name }}</p>
+                        <p><i class="material-icons">book</i> <strong>Subject:</strong> {{ student.subject_name }}</p>
+                    {% else %}
+                        <p><i class="material-icons">error</i> No teacher or subject assigned yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
